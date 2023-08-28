@@ -1,20 +1,19 @@
 import sys
 input = sys.stdin.readline
-from queue import PriorityQueue
+from heapq import heapify, heappop, heappush
 
 if __name__ == '__main__':
     n = int(input())
-    q = PriorityQueue()
-    for _ in range(n):
-        q.put(int(input()))
+    cards = [int(input()) for _ in range(n)]
+    heapify(cards)
 
-    #greedy
+    #그리디 -> 가장 작은 묶음 2개 꺼내 합침
     result = 0
-    while q.qsize() >= 2:
-        a = q.get()
-        b = q.get()
+    while len(cards) >= 2:
+        a = heappop(cards)
+        b = heappop(cards)
 
         result += (a + b)
-        q.put(a + b)
+        heappush(cards, a+b)
 
     print(result)
