@@ -18,9 +18,9 @@ if __name__ == '__main__':
     for k in range(1, n+1):
         for a in range(1, n+1):
             for b in range(1, n+1):
-                if graph[a][k] < 0 and graph[k][b] < 0: #음수는 음수끼리
+                if graph[a][k] == -1 and graph[k][b] == -1: #음수는 음수끼리
                     graph[a][b] = -1
-                elif INF > graph[a][k] > 0 and INF > graph[k][b] > 0: #양수는 양수끼리
+                elif graph[a][k] == 1 and graph[k][b] == 1: #양수는 양수끼리
                     graph[a][b] = 1
 
     #알고싶은 사건 전후관계 출력
