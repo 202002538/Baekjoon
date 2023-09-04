@@ -1,12 +1,11 @@
 import sys
 input = sys.stdin.readline
-INF = int(1e9)
 
 if __name__ == '__main__':
     n, k = map(int, input().split())
 
     #2차원 리스트 세팅
-    graph = [[INF] * (n+1) for _ in range(n+1)]
+    graph = [[0] * (n+1) for _ in range(n+1)]
     for a in range(n+1):
         graph[a][a] = 0
     for _ in range(k):
