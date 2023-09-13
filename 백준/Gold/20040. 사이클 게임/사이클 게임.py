@@ -11,6 +11,8 @@ if __name__ == '__main__':
     def union(parent, a, b):
         a = find(parent, a)
         b = find(parent, b)
+        if a == b:
+            return True
         if a > b:
             parent[a] = b
         else:
@@ -22,9 +24,6 @@ if __name__ == '__main__':
     cycle = 0
     for j in range(1, m+1):
         a, b = map(int, input().split())
-        if find(parent, a) != find(parent, b):
-            union(parent, a, b)
-        else:
-            if not cycle:
-                cycle = j
+        if union(parent, a, b) and not cycle:
+            cycle = j
     print(cycle)
