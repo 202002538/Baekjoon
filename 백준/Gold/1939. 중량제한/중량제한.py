@@ -11,7 +11,7 @@ if __name__ == '__main__':
         bridge[b].append((a,c))
 
     fac = list(map(int, input().split()))
-    def bfs(now, w):
+    def bfs(now, w): #너비 우선 탐색으로 중량 w를 들고 도달할 수 있는 모든 섬 확인
         q = deque()
         q.append(now)
         visited = [0] * (n+1) 
@@ -25,15 +25,15 @@ if __name__ == '__main__':
                     q.append(i)
                 else:
                     continue
-        return True if visited[fac[1]] else False
+        return visited[fac[1]] #1번 공장 도달여부 반환 
 
     start, end = 0, 1e9
     result = 0
 
-    while start <= end:
+    while start <= end: #이분탐색으로 들고 건널 중량을 정함
         mid = (start + end) // 2
 
-        if bfs(fac[0], mid): 
+        if bfs(fac[0], mid): #0번 공장에서 해당 중량을 들고 출발, 1번 공장에 도달할 수 있나?
             result = mid
             start = mid + 1
         else:
