@@ -1,6 +1,5 @@
 import sys
 input = sys.stdin.readline
-from collections import deque
 
 if __name__ == '__main__':
     n = int(input())
@@ -14,9 +13,9 @@ if __name__ == '__main__':
 
     #dp
     for i in range(week):
+        total = sum(dp[i])
         for j in range(n+1):
-            #다음주 내 잔고에 추가될 기대값 = (1/ 이번주 모든 사람의 잔고합) * 내 잔고 * 당첨금
-            expectation = 1/sum(dp[i]) * dp[i][j] * price
-            dp[i+1][j] = dp[i][j] + expectation
+            #다음주 내 잔고에 "추가될 기대값" = (1/ 이번주 모든 사람의 잔고합) * 내 잔고 * 당첨금
+            dp[i+1][j] = dp[i][j] + (1/total * dp[i][j] * price)
 
     print(dp[week][1]) #1번사람(강호)의 기댓값 출력
