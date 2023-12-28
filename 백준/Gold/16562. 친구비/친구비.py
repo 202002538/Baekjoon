@@ -13,6 +13,8 @@ if __name__ == '__main__':
     def union(parent, x, y):
         #비용 더 적은애가 부모가 되도록 합집합
         a, b = find(parent, x), find(parent, y)
+        if a == b:
+            return
         if money[a] <= money[b]:
             parent[b] = a
         else:
@@ -25,10 +27,6 @@ if __name__ == '__main__':
 
     for _ in range(m):
         v, w = map(int, input().split())
-        if v > w: 
-            tmp = v
-            v = w
-            w = tmp
         union(parent, v, w)
 
     #부모 노드 확인
