@@ -6,43 +6,35 @@ if __name__ == '__main__':
     n = int(input())
     arr = list(map(int, input().split()))
     asc_sort = sorted(arr.copy())
-    dec_sort = sorted(arr.copy(), reverse=True)
+    des_sort = sorted(arr.copy(), reverse=True)
 
-    def asc_arr(arr1):
-        a = 0
-        while arr1[-2] <= arr1[-1] and arr1[-1] <= arr1[0]:
-            a += 1
-            first = arr1.pop(0)
-            arr1 += [first]
-        return a, arr1
+    def asc_arr(array):
+        count, idx = 0, 0
+        for a in range(len(array)-1):
+            if array[a] > array[a+1]: #감소구간 체크
+                count += 1
+                idx = a+1
+        if count == 1 and array[0] >= arr[-1]:
+            return idx
+        else:
+            return INF
 
-    def des_arr(arr2):
-        a = 0
-        while arr2[-2] >= arr2[-1] and arr2[-1] >= arr2[0]:
-            a += 1
-            first = arr2.pop(0)
-            arr2 += [first]
-        return a, arr2
+    def des_arr(array):
+        count, idx = 0, 0
+        for a in range(len(array)-1):
+            if array[a] < array[a+1]: #증가구간 체크
+                count += 1
+                idx = a+1
+        if count == 1 and array[0] <= arr[-1]:
+            return idx
+        else:
+            return INF
 
     k = INF
-    if arr == asc_sort or arr == dec_sort:
+    if arr == asc_sort or arr == des_sort:
         k = 0
     else:
-        count, tmp = asc_arr(arr.copy())
-        if tmp == asc_sort:
-            k = min(k, count)
-        else:
-            count, tmp = asc_arr(arr[1:] + [arr[0]])
-            if tmp == asc_sort:
-                k = min(k, count+1)
-
-        count, tmp = des_arr(arr.copy())
-        if tmp == dec_sort:
-            k = min(k, count)
-        else:
-            count, tmp = des_arr(arr[1:] + [arr[0]])
-            if tmp == dec_sort:
-                k = min(k, count+1)
+        k = min(k, asc_arr(arr))
+        k = min(k, des_arr(arr))
 
     print(k) if k != INF else print(-1)
-
