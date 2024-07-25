@@ -4,7 +4,7 @@ from collections import deque
 
 dx = [0,0,-1,1]
 dy = [1,-1,0,0]
-count = []
+
 def bfs(a, b, num, land):
     q = deque()
     oil = 1
