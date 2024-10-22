@@ -4,14 +4,15 @@ from collections import Counter
 
 def solution(points, routes):
     path = []
+    points = [[0, 0]] + points
 
     for i in range(len(routes)):
         time = 0
-        x, y = points[routes[i][0]-1]
+        x, y = points[routes[i][0]]
         path.append((x, y, 0))
         for j in range(len(routes[i])-1):
-            x1, y1 = points[routes[i][j]-1]
-            x2, y2 = points[routes[i][j+1]-1]
+            x1, y1 = points[routes[i][j]]
+            x2, y2 = points[routes[i][j+1]]
             while x1 != x2 or y1 != y2:
                 time += 1
                 if x1 < x2:
