@@ -35,8 +35,8 @@ def solution(land):
 
     max_oil = 0
     for i in range(len(land[0])):
-        nums = list(map(lambda j: land[j][i], range(0, len(land))))
-        oil_get = sum(map(lambda x: total_oil[x], set(nums)))
+        drilling = set(map(lambda j: land[j][i], range(len(land))))
+        oil_get = sum(map(lambda x: total_oil[x], drilling))
         max_oil = max(max_oil, oil_get)
 
     return max_oil
