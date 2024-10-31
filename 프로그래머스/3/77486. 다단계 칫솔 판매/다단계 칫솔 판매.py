@@ -3,13 +3,8 @@ input = sys.stdin.readline
 import math
 
 def solution(enroll, referral, seller, amount):
-    level = dict(zip(enroll, [1] * len(enroll)))
     reference = dict(zip(enroll, referral))
     money = dict(zip(enroll, [0] * len(enroll)))
-
-    for i, r in enumerate(referral):
-        if r != '-':
-            level[enroll[i]] = level[r] + 1
 
     def get_money(name, earn):
         tax = int(earn / 10)
