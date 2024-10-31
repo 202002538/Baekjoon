@@ -16,6 +16,7 @@ def solution(enroll, referral, seller, amount):
     for sell, am in zip(seller, amount): 
         get_money(sell, am*100)
 
+        
     answer = []
     for e in enroll:
         answer.append(money[e])
