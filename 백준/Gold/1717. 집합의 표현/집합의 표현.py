@@ -2,30 +2,30 @@ import sys
 input = sys.stdin.readline
 sys.setrecursionlimit(100000)
 
-if __name__ == '__main__':
-    def find(parent, x):
-        if parent[x] != x:
-            parent[x] = find(parent, parent[x])
-        return parent[x]
 
-    def union(parent, a, b):
-        a = find(parent, a)
-        b = find(parent, b)
-        if a < b:
+if __name__ == '__main__':
+    n, m = map(int, input().split())
+    parent = [i for i in range(n+1)]
+
+    def union(a, b):
+        a = find_parent(a)
+        b = find_parent(b)
+        if a < b: 
             parent[b] = a
         else:
             parent[a] = b
 
-    #입력 및 초기화
-    n, m = map(int, input().split())
-    parent = [i for i in range(n+1)] #부모 배열 초기화
+    def find_parent(a):
+        if parent[a] != a:
+            parent[a] = find_parent(parent[a])
+        return parent[a]
 
     for _ in range(m):
-        op, a, b = map(int, input().split())
-        if op == 0:
-            union(parent, a, b)
+        num, x, y = map(int, input().split())
+        if num == 0:
+            union(x, y)
         else:
-            if find(parent, a) == find(parent, b):
+            if find_parent(x) == find_parent(y):
                 print("YES")
             else:
                 print("NO")
