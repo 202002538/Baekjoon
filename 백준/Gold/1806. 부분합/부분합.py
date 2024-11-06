@@ -1,23 +1,22 @@
-INF = int(1e9)
 import sys
 input = sys.stdin.readline
+INF = 1e9
 
 if __name__ == '__main__':
     n, s = map(int, input().split())
     nums = list(map(int, input().split()))
 
-    for i in range(n-1): #누적합
-        nums[i+1] += nums[i]
+    for i in range(1, n):
+        nums[i] += nums[i-1]
     nums = [0] + nums
 
-    start = 1
-    end = 1
-    result = INF
+    start, end = 0, 1
+    result = INF 
     while start <= end and end <= n:
-        total = nums[end] - nums[start-1]
-        if total >= s:
-            result = min(result, end-start+1)
-            start += 1
+        summ = nums[end] - nums[start]
+        if summ >= s:
+            result = min(result, end-start)
+            start += 1 
         else:
             end += 1
     print(0) if result == INF else print(result)
