@@ -1,7 +1,6 @@
 import sys
 input = sys.stdin.readline
-INF = 1e9
-import heapq
+from collections import deque
 
 if __name__ == '__main__':
     n, m = map(int, input().split())
@@ -14,29 +13,23 @@ if __name__ == '__main__':
 
     dx = [-1, 0, 1, 0]
     dy = [0, 1, 0, -1]
-    distance = [[INF] * m for _ in range(n)]
-    hq = []
-    heapq.heappush(hq, (0, a, b))
-    distance[a][b] = 0
+    visited = [[0] * m for _ in range(n)]
 
-    while hq:
-        dis, x, y = heapq.heappop(hq)
-        if dis > distance[x][y]:
-            continue
+    q = deque()
+    q.append((a, b))
+    while q:
+        x, y = q.popleft()
         for i in range(4):
             nx, ny = x + dx[i], y + dy[i]
-            if 0 <= nx < n and 0 <= ny < m and board[nx][ny] == 1:
-                cost = dis + 1
-                if cost < distance[nx][ny]:
-                    distance[nx][ny] = cost
-                    heapq.heappush(hq, (cost, nx, ny))
+            if 0 <= nx < n and 0 <= ny < m and \
+                    visited[nx][ny] == 0 and board[nx][ny] == 1:
+                visited[nx][ny] = visited[x][y] + 1
+                q.append((nx, ny))
 
     for i in range(n):
         for j in range(m):
-            if board[i][j] == 0:
-                print('0', end=' ')
-            elif distance[i][j] == INF:
-                print('-1', end=' ')
+            if visited[i][j] == 0 and board[i][j] == 1:
+                print(-1, end=' ')
             else:
-                print(distance[i][j], end=' ')
+                print(visited[i][j], end=' ')
         print()
