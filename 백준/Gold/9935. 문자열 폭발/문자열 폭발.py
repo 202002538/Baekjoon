@@ -10,7 +10,6 @@ if __name__ == '__main__':
     for s in strr:
         stack.append(s)
         if stack[-n:] == bomb:
-            for _ in range(n):
-                stack.pop()
+            del stack[-n:]
 
     print(''.join(stack)) if stack else print("FRULA")
