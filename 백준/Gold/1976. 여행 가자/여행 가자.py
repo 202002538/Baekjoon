@@ -1,6 +1,5 @@
 import sys
 input = sys.stdin.readline
-INF = 1e9
 
 if __name__ == '__main__':
     n = int(input())
@@ -10,21 +9,27 @@ if __name__ == '__main__':
         graph.append(list(map(int, input().split())))
     trip = list(map(int, input().split()))
 
+    def union(a, b):
+        a = find(a)
+        b = find(b)
+        if a < b:
+            parent[b] = a
+        else:
+            parent[a] = b
+
+    def find(a):
+        if parent[a] != a:
+            parent[a] = find(parent[a])
+        return parent[a]
+
+    parent = [i for i in range(n)]
     for i in range(n):
         for j in range(n):
-            if i == j:
-                graph[i][j] = 0
-            elif graph[i][j] == 0:
-                graph[i][j] = INF
-
-    for k in range(n):
-        for i in range(n):
-            for j in range(n):
-                if graph[i][k] + graph[k][j] < graph[i][j]:
-                    graph[i][j] = graph[i][k] + graph[k][j]
+            if graph[i][j] == 1:
+                union(i, j)
 
     for i in range(1, m):
-        if graph[trip[i - 1] - 1][trip[i] - 1] == INF:
+        if parent[trip[i-1]-1] != parent[trip[i]-1]:
             print("NO")
             break
     else:
