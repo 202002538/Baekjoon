@@ -13,7 +13,6 @@ dic[nums[left]] += 1
 while right < n:
     dic[nums[right]] += 1
     if dic[nums[right]] > k:
-        result = max(result, right-left)
         while True:
             dic[nums[left]] -= 1
             if nums[left] == nums[right]:
