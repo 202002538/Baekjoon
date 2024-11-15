@@ -1,27 +1,30 @@
-n=int(input())
-arr=[]
-for i in range(n):
-    arr.append(input())
+import sys
+input = sys.stdin.readline
 
-answerMaxLength=0
-answerTwoWord=[]
+n = int(input())
+words = []
 for i in range(n):
-    for j in range(i+1,n):
-        s1=arr[i]
-        s2=arr[j]
-        minL=min(len(s1),len(s2))
-        maxL=0
-        length=0
-        for k in range(minL):
-            if s1[k]!=s2[k]:
-                maxL=max(maxL,length)
-                break
-            else:
-                length+=1
-        if length==minL:
-            maxL=max(maxL,length)
-        if answerMaxLength<maxL:
-            answerTwoWord=[s1,s2]
-            answerMaxLength=maxL
-for i in range(2):
-    print(answerTwoWord[i])
+    words.append(input()[:-1])
+
+def check(a, b):
+    count = 0
+    for i in range(min(len(a), len(b))):
+        if a[i] == b[i]:
+            count += 1
+        else:
+            break
+    return count
+
+maxlen = 0
+tmp = []
+for i in range(n):
+    for j in range(i+1, n):
+        if words[i][0] != words[j][0]:
+            continue
+        count = check(words[i], words[j])
+        if count > maxlen:
+            maxlen = count
+            tmp = [words[i], words[j]]
+
+print(tmp[0])
+print(tmp[1])
