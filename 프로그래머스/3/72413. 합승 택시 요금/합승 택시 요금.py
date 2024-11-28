@@ -1,28 +1,40 @@
 INF= 1e9
 import sys
 input = sys.stdin.readline
+import heapq
 
 def solution(n, s, a, b, fares):
-    graph = [[INF] * (n+1) for _ in range(n+1)]
-
-    for i in range(1, n+1):
-        graph[i][i] = 0
+    graph = [[] for _ in range(n+1)]
 
     for i, j, d in fares:
-        graph[i][j] = d 
-        graph[j][i] = d
+        graph[i].append((j, d))
+        graph[j].append((i, d))
 
-    #플로이드 워셜
-    for k in range(1, n+1):
-        for i in range(1, n+1):
-            for j in range(1, n+1):
-                graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
+    def dijkstra(start):
+        visited = [False] * (n + 1)
+        distance = [INF] * (n + 1)
+        q = []
 
+        heapq.heappush(q, (0, start))
+        distance[start] = 0
+
+        while q:
+            dist, now = heapq.heappop(q)
+            if distance[now] < dist:
+                continue
+            for i in graph[now]:
+                cost = dist + i[1]
+                if cost < distance[i[0]]:
+                    distance[i[0]] = cost
+                    heapq.heappush(q, (cost, i[0]))
+        return distance
+
+    dis_s = dijkstra(s)
+    dis_a = dijkstra(a)
+    dis_b = dijkstra(b)
     result = INF
-    for i in range(1, n+1):
-        tmp = 0
-        tmp += graph[s][i]
-        tmp += graph[i][a]
-        tmp += graph[i][b]
+    
+    for i in range(1, n+1): # i: 헤어지는 지점
+        tmp = dis_s[i] + dis_a[i] + dis_b[i]
         result = min(result, tmp)
     return result
