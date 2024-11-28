@@ -11,7 +11,6 @@ def solution(n, s, a, b, fares):
         graph[j].append((i, d))
 
     def dijkstra(start):
-        visited = [False] * (n + 1)
         distance = [INF] * (n + 1)
         q = []
 
