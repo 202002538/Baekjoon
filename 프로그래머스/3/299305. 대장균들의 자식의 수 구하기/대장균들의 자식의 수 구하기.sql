@@ -1,0 +1,8 @@
+-- ID의 자식의 수 = PARENT_ID에 ID가 등장하는 수
+-- 내 ID를 기준으로, 나를 부모로 갖는 ID을 갖다붙인다. 
+SELECT A.ID, COUNT(B.ID) AS CHILD_COUNT
+FROM ECOLI_DATA A LEFT JOIN ECOLI_DATA B ON A.ID = B.PARENT_ID
+GROUP BY A.ID
+ORDER BY A.ID
+
+
