@@ -1,0 +1,20 @@
+-- 새로 생길 컬럼 GRADE를 서브쿼리에서 만들어서, 메인 쿼리에서 GRADE가 존재하지 않는 값들을 필터링한다
+SELECT
+    GRADE, ID, EMAIL
+FROM (
+    SELECT
+        (CASE
+            WHEN SKILL_CODE & (SELECT SUM(CODE) FROM SKILLCODES WHERE CATEGORY = 'Front End') != 0
+             AND SKILL_CODE & (SELECT CODE FROM SKILLCODES WHERE NAME = 'Python') != 0 THEN 'A'
+            WHEN SKILL_CODE & (SELECT CODE FROM SKILLCODES WHERE NAME = 'C#') != 0 THEN 'B'
+            WHEN SKILL_CODE & (SELECT SUM(CODE) FROM SKILLCODES WHERE CATEGORY = 'Front End') != 0 THEN 'C'
+            ELSE NULL
+        END) AS GRADE,
+        ID,
+        EMAIL
+    FROM DEVELOPERS
+) AS DEVELOPERS_GRADE 
+WHERE
+    GRADE IS NOT NULL
+ORDER BY
+    GRADE, ID;
