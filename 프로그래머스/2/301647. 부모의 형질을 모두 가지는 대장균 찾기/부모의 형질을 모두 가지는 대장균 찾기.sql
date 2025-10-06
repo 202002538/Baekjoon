@@ -1,0 +1,15 @@
+-- 메인쿼리: 부모 형질과 현재 형질을 비교
+SELECT *
+FROM -- 서브쿼리: 부모 형질을 가져옴
+    (SELECT
+        ID,
+        GENOTYPE, 
+        (SELECT GENOTYPE
+         FROM ECOLI_DATA TMP
+         WHERE TMP.ID = E.PARENT_ID) AS PARENT_GENOTYPE
+     FROM ECOLI_DATA E
+    ) AS TMP
+WHERE GENOTYPE & PARENT_GENOTYPE = PARENT_GENOTYPE
+ORDER BY ID
+
+    
